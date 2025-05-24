@@ -1,0 +1,6 @@
+C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DTO_KhangNghi\bin\Debug\DTO_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DTO_KhangNghi\bin\Debug\DTO_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DTO_KhangNghi\obj\Debug\DTO_KhangNghi.csproj.AssemblyReference.cache
+C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DTO_KhangNghi\obj\Debug\DTO_KhangNghi.csproj.CoreCompileInputs.cache
+C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DTO_KhangNghi\obj\Debug\DTO_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DTO_KhangNghi\obj\Debug\DTO_KhangNghi.pdb
