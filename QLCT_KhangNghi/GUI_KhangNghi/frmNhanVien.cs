@@ -42,6 +42,21 @@ namespace GUI_KhangNghi
         private void LoadNhanVien()
         {
             dgvDSNV.DataSource = bus.LayDanhSachNhanVien();           
+            // Đặt lại tiêu đề cột (HeaderText)
+            dgvDSNV.Columns["MaNV"].HeaderText = "Mã nhân viên";
+            dgvDSNV.Columns["HoTen"].HeaderText = "Họ tên";
+            dgvDSNV.Columns["NgaySinh"].HeaderText = "Ngày sinh";
+            dgvDSNV.Columns["GioiTinh"].HeaderText = "Giới tính";
+            dgvDSNV.Columns["Email"].HeaderText = "Email";
+            dgvDSNV.Columns["SoDienThoai"].HeaderText = "Số điện thoại";
+            dgvDSNV.Columns["DiaChi"].HeaderText = "Địa chỉ";
+            dgvDSNV.Columns["TenChucVu"].HeaderText = "Chức vụ";
+            dgvDSNV.Columns["TenPB"].HeaderText = "Phòng ban";
+            // Các cột khóa chính/ngoại ẩn đi
+            if (dgvDSNV.Columns.Contains("MaChucVu"))
+                dgvDSNV.Columns["MaChucVu"].Visible = false;
+            if (dgvDSNV.Columns.Contains("MaPB"))
+                dgvDSNV.Columns["MaPB"].Visible = false;
             LoadChucVu_PhongBan();           
             LoadTinhThanh();
             txtMaNV.Text = GenerateMaNV();

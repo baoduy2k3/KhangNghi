@@ -59,6 +59,21 @@ namespace GUI_KhangNghi
         private void LoadSanPham()
         {
             dgvDSSP.DataSource = bus.LayDanhSachSanPham();
+            // Đặt tiêu đề cột
+            if (dgvDSSP.Columns.Contains("MaSP"))
+                dgvDSSP.Columns["MaSP"].HeaderText = "Mã sản phẩm";
+            if (dgvDSSP.Columns.Contains("TenSP"))
+                dgvDSSP.Columns["TenSP"].HeaderText = "Tên sản phẩm";
+            if (dgvDSSP.Columns.Contains("DonViTinh"))
+                dgvDSSP.Columns["DonViTinh"].HeaderText = "Đơn vị tính";
+            if (dgvDSSP.Columns.Contains("MaLoaiSP"))
+                dgvDSSP.Columns["MaLoaiSP"].Visible = false;
+            if (dgvDSSP.Columns.Contains("GiaBan"))
+                dgvDSSP.Columns["GiaBan"].HeaderText = "Giá bán";
+            if (dgvDSSP.Columns.Contains("MoTa"))
+                dgvDSSP.Columns["MoTa"].HeaderText = "Mô tả";
+            if (dgvDSSP.Columns.Contains("TenLoaiSanPham"))
+                dgvDSSP.Columns["TenLoaiSanPham"].HeaderText = "Loại sản phẩm";
             txtMaSP.Text = GenerateMaSP();
             txtMaSP.ReadOnly = true;
             txtMaSP.TabStop = false;
@@ -157,7 +172,7 @@ namespace GUI_KhangNghi
                 DataGridViewRow row = dgvDSSP.Rows[e.RowIndex];
                 txtMaSP.Text = row.Cells["MaSP"].Value.ToString();
                 txtTenSP.Text = row.Cells["TenSP"].Value.ToString();
-                cbLoaiSP.Text = row.Cells["TenLoaiSP"].Value.ToString();
+                cbLoaiSP.Text = row.Cells["TenLoaiSanPham"].Value.ToString();
                 txtGiaBan.Text = row.Cells["GiaBan"].Value.ToString();
                 txtMoTa.Text = row.Cells["MoTa"].Value.ToString();
             }

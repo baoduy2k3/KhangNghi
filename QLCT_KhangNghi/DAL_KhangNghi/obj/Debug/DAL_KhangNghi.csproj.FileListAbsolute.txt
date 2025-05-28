@@ -7,3 +7,12 @@ C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_KhangNghi.cs
 C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_Khan.4CADD157.Up2Date
 C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_KhangNghi.dll
 C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\bin\Debug\DAL_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\bin\Debug\DAL_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\bin\Debug\DTO_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\bin\Debug\DTO_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_KhangNghi.csproj.AssemblyReference.cache
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_KhangNghi.csproj.CoreCompileInputs.cache
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_Khan.4CADD157.Up2Date
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\DAL_KhangNghi\obj\Debug\DAL_KhangNghi.pdb

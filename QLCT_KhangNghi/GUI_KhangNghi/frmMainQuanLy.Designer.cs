@@ -31,17 +31,19 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainQuanLy));
             this.panelTieuDe = new Guna.UI2.WinForms.Guna2Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnTaiKhoan = new Guna.UI2.WinForms.Guna2Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.picLogo = new Guna.UI2.WinForms.Guna2PictureBox();
             this.panelMenu = new Guna.UI2.WinForms.Guna2Panel();
-            this.btnDMK = new Guna.UI2.WinForms.Guna2Button();
             this.btnThongKe = new Guna.UI2.WinForms.Guna2Button();
             this.btnNhapXuat = new Guna.UI2.WinForms.Guna2Button();
             this.btnCongNo = new Guna.UI2.WinForms.Guna2Button();
             this.btnLLV = new Guna.UI2.WinForms.Guna2Button();
             this.btnTonKho = new Guna.UI2.WinForms.Guna2Button();
             this.panelSubMenu = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnNCC = new Guna.UI2.WinForms.Guna2Button();
             this.btnHopDong = new Guna.UI2.WinForms.Guna2Button();
             this.btnDichVu = new Guna.UI2.WinForms.Guna2Button();
             this.btnSanPham = new Guna.UI2.WinForms.Guna2Button();
@@ -50,13 +52,17 @@
             this.btnDanhMuc = new Guna.UI2.WinForms.Guna2Button();
             this.btnTrangChu = new Guna.UI2.WinForms.Guna2Button();
             this.panelBody = new Guna.UI2.WinForms.Guna2Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.ctxMenuTaiKhoan = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
+            this.xemTàiKhoảnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.đổiMậtKhẩuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.đăngXuấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTieuDe.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             this.panelMenu.SuspendLayout();
             this.panelSubMenu.SuspendLayout();
+            this.ctxMenuTaiKhoan.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTieuDe
@@ -75,6 +81,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.btnTaiKhoan);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.guna2PictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
@@ -82,6 +89,36 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(247, 63);
             this.panel1.TabIndex = 1;
+            // 
+            // btnTaiKhoan
+            // 
+            this.btnTaiKhoan.BackColor = System.Drawing.Color.Transparent;
+            this.btnTaiKhoan.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnTaiKhoan.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnTaiKhoan.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnTaiKhoan.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnTaiKhoan.FillColor = System.Drawing.Color.Transparent;
+            this.btnTaiKhoan.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnTaiKhoan.ForeColor = System.Drawing.Color.White;
+            this.btnTaiKhoan.HoverState.FillColor = System.Drawing.Color.CornflowerBlue;
+            this.btnTaiKhoan.Image = ((System.Drawing.Image)(resources.GetObject("btnTaiKhoan.Image")));
+            this.btnTaiKhoan.Location = new System.Drawing.Point(181, 12);
+            this.btnTaiKhoan.Name = "btnTaiKhoan";
+            this.btnTaiKhoan.Size = new System.Drawing.Size(54, 38);
+            this.btnTaiKhoan.TabIndex = 2;
+            this.btnTaiKhoan.Click += new System.EventHandler(this.btnTaiKhoan_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.label1.Location = new System.Drawing.Point(62, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 18);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Nguyễn Văn A";
             // 
             // guna2PictureBox1
             // 
@@ -122,7 +159,6 @@
             // 
             // panelMenu
             // 
-            this.panelMenu.Controls.Add(this.btnDMK);
             this.panelMenu.Controls.Add(this.btnThongKe);
             this.panelMenu.Controls.Add(this.btnNhapXuat);
             this.panelMenu.Controls.Add(this.btnCongNo);
@@ -137,31 +173,6 @@
             this.panelMenu.Name = "panelMenu";
             this.panelMenu.Size = new System.Drawing.Size(265, 992);
             this.panelMenu.TabIndex = 4;
-            // 
-            // btnDMK
-            // 
-            this.btnDMK.BackColor = System.Drawing.Color.Transparent;
-            this.btnDMK.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnDMK.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnDMK.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnDMK.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnDMK.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnDMK.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnDMK.FillColor = System.Drawing.Color.Transparent;
-            this.btnDMK.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDMK.ForeColor = System.Drawing.Color.White;
-            this.btnDMK.Image = ((System.Drawing.Image)(resources.GetObject("btnDMK.Image")));
-            this.btnDMK.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnDMK.ImageOffset = new System.Drawing.Point(8, 0);
-            this.btnDMK.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnDMK.Location = new System.Drawing.Point(0, 885);
-            this.btnDMK.Name = "btnDMK";
-            this.btnDMK.Size = new System.Drawing.Size(265, 73);
-            this.btnDMK.TabIndex = 12;
-            this.btnDMK.Text = "Đổi mật khẩu";
-            this.btnDMK.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
-            this.btnDMK.TextOffset = new System.Drawing.Point(15, 0);
-            this.btnDMK.Click += new System.EventHandler(this.btnDMK_Click);
             // 
             // btnThongKe
             // 
@@ -179,7 +190,7 @@
             this.btnThongKe.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnThongKe.ImageOffset = new System.Drawing.Point(8, 0);
             this.btnThongKe.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnThongKe.Location = new System.Drawing.Point(0, 812);
+            this.btnThongKe.Location = new System.Drawing.Point(0, 889);
             this.btnThongKe.Name = "btnThongKe";
             this.btnThongKe.Size = new System.Drawing.Size(265, 73);
             this.btnThongKe.TabIndex = 10;
@@ -204,7 +215,7 @@
             this.btnNhapXuat.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnNhapXuat.ImageOffset = new System.Drawing.Point(8, 0);
             this.btnNhapXuat.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnNhapXuat.Location = new System.Drawing.Point(0, 739);
+            this.btnNhapXuat.Location = new System.Drawing.Point(0, 816);
             this.btnNhapXuat.Name = "btnNhapXuat";
             this.btnNhapXuat.Size = new System.Drawing.Size(265, 73);
             this.btnNhapXuat.TabIndex = 9;
@@ -229,7 +240,7 @@
             this.btnCongNo.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnCongNo.ImageOffset = new System.Drawing.Point(8, 0);
             this.btnCongNo.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnCongNo.Location = new System.Drawing.Point(0, 666);
+            this.btnCongNo.Location = new System.Drawing.Point(0, 743);
             this.btnCongNo.Name = "btnCongNo";
             this.btnCongNo.Size = new System.Drawing.Size(265, 73);
             this.btnCongNo.TabIndex = 8;
@@ -254,7 +265,7 @@
             this.btnLLV.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnLLV.ImageOffset = new System.Drawing.Point(8, 0);
             this.btnLLV.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnLLV.Location = new System.Drawing.Point(0, 593);
+            this.btnLLV.Location = new System.Drawing.Point(0, 670);
             this.btnLLV.Name = "btnLLV";
             this.btnLLV.Size = new System.Drawing.Size(265, 73);
             this.btnLLV.TabIndex = 7;
@@ -279,7 +290,7 @@
             this.btnTonKho.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.btnTonKho.ImageOffset = new System.Drawing.Point(8, 0);
             this.btnTonKho.ImageSize = new System.Drawing.Size(25, 25);
-            this.btnTonKho.Location = new System.Drawing.Point(0, 520);
+            this.btnTonKho.Location = new System.Drawing.Point(0, 597);
             this.btnTonKho.Name = "btnTonKho";
             this.btnTonKho.Size = new System.Drawing.Size(265, 73);
             this.btnTonKho.TabIndex = 6;
@@ -291,6 +302,7 @@
             // panelSubMenu
             // 
             this.panelSubMenu.BackColor = System.Drawing.Color.Transparent;
+            this.panelSubMenu.Controls.Add(this.btnNCC);
             this.panelSubMenu.Controls.Add(this.btnHopDong);
             this.panelSubMenu.Controls.Add(this.btnDichVu);
             this.panelSubMenu.Controls.Add(this.btnSanPham);
@@ -299,8 +311,33 @@
             this.panelSubMenu.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSubMenu.Location = new System.Drawing.Point(0, 146);
             this.panelSubMenu.Name = "panelSubMenu";
-            this.panelSubMenu.Size = new System.Drawing.Size(265, 374);
+            this.panelSubMenu.Size = new System.Drawing.Size(265, 451);
             this.panelSubMenu.TabIndex = 5;
+            // 
+            // btnNCC
+            // 
+            this.btnNCC.BackColor = System.Drawing.Color.Transparent;
+            this.btnNCC.BorderColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnNCC.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnNCC.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnNCC.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnNCC.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnNCC.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnNCC.FillColor = System.Drawing.Color.Transparent;
+            this.btnNCC.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNCC.ForeColor = System.Drawing.Color.White;
+            this.btnNCC.Image = ((System.Drawing.Image)(resources.GetObject("btnNCC.Image")));
+            this.btnNCC.ImageAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnNCC.ImageOffset = new System.Drawing.Point(30, 0);
+            this.btnNCC.ImageSize = new System.Drawing.Size(25, 25);
+            this.btnNCC.Location = new System.Drawing.Point(0, 365);
+            this.btnNCC.Name = "btnNCC";
+            this.btnNCC.Size = new System.Drawing.Size(265, 73);
+            this.btnNCC.TabIndex = 11;
+            this.btnNCC.Text = "Quản lý nhà cung cấp";
+            this.btnNCC.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.btnNCC.TextOffset = new System.Drawing.Point(30, 0);
+            this.btnNCC.Click += new System.EventHandler(this.btnNCC_Click);
             // 
             // btnHopDong
             // 
@@ -485,17 +522,45 @@
             this.panelBody.Size = new System.Drawing.Size(1026, 992);
             this.panelBody.TabIndex = 5;
             // 
-            // label1
+            // ctxMenuTaiKhoan
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.label1.Location = new System.Drawing.Point(62, 22);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 18);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Nguyễn Văn A";
+            this.ctxMenuTaiKhoan.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ctxMenuTaiKhoan.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xemTàiKhoảnToolStripMenuItem,
+            this.đổiMậtKhẩuToolStripMenuItem,
+            this.đăngXuấtToolStripMenuItem});
+            this.ctxMenuTaiKhoan.Name = "ctxMenuTaiKhoan";
+            this.ctxMenuTaiKhoan.RenderStyle.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
+            this.ctxMenuTaiKhoan.RenderStyle.BorderColor = System.Drawing.Color.Gainsboro;
+            this.ctxMenuTaiKhoan.RenderStyle.ColorTable = null;
+            this.ctxMenuTaiKhoan.RenderStyle.RoundedEdges = true;
+            this.ctxMenuTaiKhoan.RenderStyle.SelectionArrowColor = System.Drawing.Color.White;
+            this.ctxMenuTaiKhoan.RenderStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            this.ctxMenuTaiKhoan.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.ctxMenuTaiKhoan.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
+            this.ctxMenuTaiKhoan.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.ctxMenuTaiKhoan.Size = new System.Drawing.Size(215, 110);
+            // 
+            // xemTàiKhoảnToolStripMenuItem
+            // 
+            this.xemTàiKhoảnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("xemTàiKhoảnToolStripMenuItem.Image")));
+            this.xemTàiKhoảnToolStripMenuItem.Name = "xemTàiKhoảnToolStripMenuItem";
+            this.xemTàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.xemTàiKhoảnToolStripMenuItem.Text = "Xem tài khoản";
+            // 
+            // đổiMậtKhẩuToolStripMenuItem
+            // 
+            this.đổiMậtKhẩuToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("đổiMậtKhẩuToolStripMenuItem.Image")));
+            this.đổiMậtKhẩuToolStripMenuItem.Name = "đổiMậtKhẩuToolStripMenuItem";
+            this.đổiMậtKhẩuToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.đổiMậtKhẩuToolStripMenuItem.Text = "Đổi mật khẩu";
+            // 
+            // đăngXuấtToolStripMenuItem
+            // 
+            this.đăngXuấtToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("đăngXuấtToolStripMenuItem.Image")));
+            this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // frmMainQuanLy
             // 
@@ -516,6 +581,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             this.panelMenu.ResumeLayout(false);
             this.panelSubMenu.ResumeLayout(false);
+            this.ctxMenuTaiKhoan.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -542,7 +608,12 @@
         private Guna.UI2.WinForms.Guna2Button btnThongKe;
         private Guna.UI2.WinForms.Guna2Button btnNhapXuat;
         private Guna.UI2.WinForms.Guna2Button btnCongNo;
-        private Guna.UI2.WinForms.Guna2Button btnDMK;
         private System.Windows.Forms.Label label1;
+        private Guna.UI2.WinForms.Guna2Button btnNCC;
+        private Guna.UI2.WinForms.Guna2Button btnTaiKhoan;
+        private Guna.UI2.WinForms.Guna2ContextMenuStrip ctxMenuTaiKhoan;
+        private System.Windows.Forms.ToolStripMenuItem xemTàiKhoảnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem đổiMậtKhẩuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem đăngXuấtToolStripMenuItem;
     }
 }

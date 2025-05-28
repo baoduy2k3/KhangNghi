@@ -140,6 +140,18 @@ namespace GUI_KhangNghi
         private void btnDMK_Click(object sender, EventArgs e)
         {
 
-        }      
+        }
+
+        private void btnNCC_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmNhaCungCap());
+            lblTieuDe.Text = btnNCC.Text;
+            hideSubMenu();
+        }
+
+        private void btnTaiKhoan_Click(object sender, EventArgs e)
+        {
+            ctxMenuTaiKhoan.Show(btnTaiKhoan, new Point(0, btnTaiKhoan.Height));
+        }
     }
 }

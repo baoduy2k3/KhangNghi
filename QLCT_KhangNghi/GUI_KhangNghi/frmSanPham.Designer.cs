@@ -41,6 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
+            this.btnReset = new Guna.UI2.WinForms.Guna2Button();
             this.btnLuu = new Guna.UI2.WinForms.Guna2Button();
             this.btnSua = new Guna.UI2.WinForms.Guna2Button();
             this.btnXoa = new Guna.UI2.WinForms.Guna2Button();
@@ -53,7 +54,8 @@
             this.cbDVT = new Guna.UI2.WinForms.Guna2ComboBox();
             this.guna2Panel3 = new Guna.UI2.WinForms.Guna2Panel();
             this.dgvDSSP = new Guna.UI2.WinForms.Guna2DataGridView();
-            this.btnReset = new Guna.UI2.WinForms.Guna2Button();
+            this.btnTimKiem = new Guna.UI2.WinForms.Guna2Button();
+            this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2Panel2.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel3.SuspendLayout();
@@ -62,6 +64,8 @@
             // 
             // guna2Panel2
             // 
+            this.guna2Panel2.Controls.Add(this.btnTimKiem);
+            this.guna2Panel2.Controls.Add(this.guna2TextBox1);
             this.guna2Panel2.Controls.Add(this.label7);
             this.guna2Panel2.Controls.Add(this.label6);
             this.guna2Panel2.Controls.Add(this.label5);
@@ -165,6 +169,24 @@
             this.guna2Panel1.Name = "guna2Panel1";
             this.guna2Panel1.Size = new System.Drawing.Size(255, 462);
             this.guna2Panel1.TabIndex = 30;
+            // 
+            // btnReset
+            // 
+            this.btnReset.BorderRadius = 10;
+            this.btnReset.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnReset.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnReset.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnReset.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnReset.FillColor = System.Drawing.Color.RoyalBlue;
+            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnReset.ForeColor = System.Drawing.Color.White;
+            this.btnReset.Image = ((System.Drawing.Image)(resources.GetObject("btnReset.Image")));
+            this.btnReset.Location = new System.Drawing.Point(56, 343);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(142, 39);
+            this.btnReset.TabIndex = 5;
+            this.btnReset.Text = "TẢI LẠI";
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnLuu
             // 
@@ -413,23 +435,41 @@
             this.dgvDSSP.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
             this.dgvDSSP.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvDSSP_CellClick);
             // 
-            // btnReset
+            // btnTimKiem
             // 
-            this.btnReset.BorderRadius = 10;
-            this.btnReset.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.btnReset.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.btnReset.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.btnReset.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.btnReset.FillColor = System.Drawing.Color.RoyalBlue;
-            this.btnReset.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.ForeColor = System.Drawing.Color.White;
-            this.btnReset.Image = ((System.Drawing.Image)(resources.GetObject("btnReset.Image")));
-            this.btnReset.Location = new System.Drawing.Point(56, 343);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(142, 39);
-            this.btnReset.TabIndex = 5;
-            this.btnReset.Text = "TẢI LẠI";
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnTimKiem.BorderRadius = 10;
+            this.btnTimKiem.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
+            this.btnTimKiem.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
+            this.btnTimKiem.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
+            this.btnTimKiem.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
+            this.btnTimKiem.FillColor = System.Drawing.Color.RoyalBlue;
+            this.btnTimKiem.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTimKiem.ForeColor = System.Drawing.Color.White;
+            this.btnTimKiem.Image = ((System.Drawing.Image)(resources.GetObject("btnTimKiem.Image")));
+            this.btnTimKiem.Location = new System.Drawing.Point(615, 343);
+            this.btnTimKiem.Name = "btnTimKiem";
+            this.btnTimKiem.Size = new System.Drawing.Size(111, 39);
+            this.btnTimKiem.TabIndex = 60;
+            // 
+            // guna2TextBox1
+            // 
+            this.guna2TextBox1.BorderRadius = 5;
+            this.guna2TextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.guna2TextBox1.DefaultText = "";
+            this.guna2TextBox1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.guna2TextBox1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.guna2TextBox1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.guna2TextBox1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.guna2TextBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2TextBox1.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+            this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2TextBox1.Location = new System.Drawing.Point(79, 343);
+            this.guna2TextBox1.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.guna2TextBox1.Name = "guna2TextBox1";
+            this.guna2TextBox1.PlaceholderText = "Tìm kiếm";
+            this.guna2TextBox1.SelectedText = "";
+            this.guna2TextBox1.Size = new System.Drawing.Size(530, 39);
+            this.guna2TextBox1.TabIndex = 61;
             // 
             // frmSanPham
             // 
@@ -475,5 +515,7 @@
         private Guna.UI2.WinForms.Guna2Panel guna2Panel3;
         private Guna.UI2.WinForms.Guna2DataGridView dgvDSSP;
         private Guna.UI2.WinForms.Guna2Button btnReset;
+        private Guna.UI2.WinForms.Guna2Button btnTimKiem;
+        private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
     }
 }

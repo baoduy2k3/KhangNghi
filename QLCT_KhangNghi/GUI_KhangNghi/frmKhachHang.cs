@@ -43,7 +43,14 @@ namespace GUI_KhangNghi
 
         private void LoadKhachHang()
         {
-            dgvDSKH.DataSource = bus.LayDanhSachKhachHang();           
+            dgvDSKH.DataSource = bus.LayDanhSachKhachHang();
+            // Đặt tiêu đề cột dễ hiểu
+            dgvDSKH.Columns["MaKH"].HeaderText = "Mã khách hàng";
+            dgvDSKH.Columns["TenKH"].HeaderText = "Họ tên";
+            dgvDSKH.Columns["TenLoaiKH"].HeaderText = "Loại khách hàng";
+            dgvDSKH.Columns["Email"].HeaderText = "Email";
+            dgvDSKH.Columns["SoDienThoai"].HeaderText = "Số điện thoại";
+            dgvDSKH.Columns["DiaChi"].HeaderText = "Địa chỉ";
             LoadTinhThanh();
             txtMaKH.Text = GenerateMaKH();
             txtMaKH.ReadOnly = true;
