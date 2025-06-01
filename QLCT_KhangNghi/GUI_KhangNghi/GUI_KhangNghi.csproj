@@ -166,6 +166,12 @@
     <Compile Include="frmSanPham.Designer.cs">
       <DependentUpon>frmSanPham.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmThongKe.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmThongKe.Designer.cs">
+      <DependentUpon>frmThongKe.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmTonKho.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -230,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSanPham.resx">
       <DependentUpon>frmSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmThongKe.resx">
+      <DependentUpon>frmThongKe.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTonKho.resx">
       <DependentUpon>frmTonKho.cs</DependentUpon>

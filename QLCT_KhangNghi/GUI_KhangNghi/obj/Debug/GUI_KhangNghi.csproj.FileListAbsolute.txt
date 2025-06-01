@@ -183,3 +183,4 @@ C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\GUI_KhangNghi\bin\Debug\DevExp
 C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\GUI_KhangNghi\bin\Debug\DevExpress.Diagram.v24.1.Core.xml
 C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\GUI_KhangNghi\bin\Debug\DevExpress.XtraDiagram.v24.1.xml
 C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\GUI_KhangNghi\bin\Debug\Guna.Charts.WinForms.xml
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\GUI_KhangNghi\obj\Debug\GUI_KhangNghi.frmThongKe.resources

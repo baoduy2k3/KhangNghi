@@ -208,6 +208,55 @@ CREATE TABLE ThanhToan (
     MaKH CHAR(5) FOREIGN KEY REFERENCES KhachHang(MaKH)
 );
 
+--Ràng buộc toàn vẹn
+--NHÂN VIÊN
+ALTER TABLE NhanVien
+ADD CONSTRAINT CK_NhanVien_GioiTinh CHECK (GioiTinh IN (N'Nam', N'Nữ'));
+
+ALTER TABLE NhanVien
+ADD CONSTRAINT CK_NhanVien_Tuoi CHECK (DATEDIFF(YEAR, NgaySinh, GETDATE()) >= 18);
+
+ALTER TABLE NhanVien
+ADD CONSTRAINT CK_NhanVien_Email CHECK (Email LIKE '_%@_%._%');
+
+ALTER TABLE NhanVien
+ADD CONSTRAINT CK_NhanVien_SDT CHECK (
+    SoDienThoai LIKE '0%' AND
+    LEN(SoDienThoai) BETWEEN 10 AND 12 AND
+    SoDienThoai NOT LIKE '%[^0-9]%'
+);
+
+--KHÁCH HÀNG
+ALTER TABLE KhachHang
+ADD CONSTRAINT CK_KhachHang_Email CHECK (Email LIKE '_%@_%._%');
+
+ALTER TABLE KhachHang
+ADD CONSTRAINT CK_KhachHang_SDT CHECK (
+    SoDienThoai LIKE '0%' AND
+    LEN(SoDienThoai) BETWEEN 10 AND 12 AND
+    SoDienThoai NOT LIKE '%[^0-9]%'
+);
+
+--NHÀ CUNG CẤP
+ALTER TABLE NhaCungCap
+ADD CONSTRAINT CK_NCC_Email CHECK (Email LIKE '_%@_%._%');
+
+ALTER TABLE NhaCungCap
+ADD CONSTRAINT CK_NCC_SDT CHECK (
+    SoDienThoai LIKE '0%' AND
+    LEN(SoDienThoai) BETWEEN 10 AND 12 AND
+    SoDienThoai NOT LIKE '%[^0-9]%'
+);
+
+--SẢN PHẨM
+ALTER TABLE SanPham
+ADD CONSTRAINT CK_SanPham_Gia CHECK (GiaBan > 0);
+
+--DỊCH VỤ
+ALTER TABLE DichVu
+ADD CONSTRAINT CK_DichVu_Gia CHECK (GiaDichVu > 0);
+
+
 -- Thêm nhân viên
 CREATE PROCEDURE sp_ThemNhanVien
     @MaNV CHAR(5), @HoTen NVARCHAR(100), @NgaySinh DATE, @GioiTinh NVARCHAR(10),
@@ -354,6 +403,15 @@ INSERT INTO LoaiSanPham (MaLoai, TenLoai) VALUES
 ('L005', N'Thiết bị truyền tải điện'),
 ('L006', N'Vật tư phụ kiện'),
 ('L007', N'Biến tần');
+
+--Lấy danh sách loạiloại sản phẩm
+CREATE PROCEDURE sp_LayDanhSachLoaiSanPham
+AS
+BEGIN
+    SELECT MaLoai, TenLoai
+    FROM LoaiSanPham;
+END
+
 
 -- Thêm sản phẩm
 INSERT INTO SanPham (MaSP, TenSP, DonViTinh, MoTa, GiaBan, MaLoai) VALUES
@@ -1433,6 +1491,64 @@ BEGIN
     JOIN TonKho tk ON cs.MaSP = tk.MaSP AND tk.Ngay = cs.NgayGiaoDichCuoiCungTrongKy
     ORDER BY cs.TenSP, cs.NgayGiaoDichCuoiCungTrongKy;
 
+END
+GO
+
+INSERT INTO NhaCungCap VALUES
+('NCC01', N'Công ty TNHH Thiết bị Kỹ thuật Minh Long', 'minhlong@tech.com', '0909000001', N'123 Nguyễn Văn Cừ, Hà Nội'),
+('NCC02', N'Công ty Cổ phần Phát triển Phú Mỹ', 'phumy@corp.vn', '0909000002', N'88 Trường Chinh, TP.HCM'),
+('NCC03', N'Công ty TNHH TM&DV Thành Đạt', 'thanhdat@supplies.vn', '0909000003', N'56 Pasteur, Đà Nẵng'),
+('NCC04', N'Tổng Công ty Thiết bị Sài Gòn', 'sales@saigontek.vn', '0909000004', N'01 Lý Thường Kiệt, TP.HCM'),
+('NCC05', N'Công ty TNHH Thiết bị Hoàng Gia', 'info@hoanggia.com.vn', '0909000005', N'789 Huỳnh Tấn Phát, Cần Thơ'),
+('NCC06', N'Công ty CP Công nghệ Nam Việt', 'support@namviet.com', '0909000006', N'19 Nguyễn Văn Linh, Huế'),
+('NCC07', N'Công ty TNHH Thiết bị An Bình', 'anbinh@sup.vn', '0909000007', N'42 Điện Biên Phủ, Hải Phòng'),
+('NCC08', N'Công ty CP Cơ khí Đông Á', 'dongaco@mech.com', '0909000008', N'12 Phan Đình Phùng, Quảng Ninh'),
+('NCC09', N'Công ty TNHH Dịch vụ và Thiết bị Bách Khoa', 'bkservice@tech.vn', '0909000009', N'234 Trần Hưng Đạo, Bình Dương'),
+('NCC10', N'Công ty TNHH Vật tư và Thiết bị Y tế Phúc An', 'phucan@med.vn', '0909000010', N'45 Võ Thị Sáu, Đồng Nai');
+
+CREATE PROCEDURE sp_ThemNhaCungCap
+    @MaNCC CHAR(5),
+    @TenNCC NVARCHAR(100),
+    @Email NVARCHAR(100),
+    @SoDienThoai NVARCHAR(20),
+    @DiaChi NVARCHAR(255)
+AS
+BEGIN
+    INSERT INTO NhaCungCap (MaNCC, TenNCC, Email, SoDienThoai, DiaChi)
+    VALUES (@MaNCC, @TenNCC, @Email, @SoDienThoai, @DiaChi)
+END
+GO
+
+CREATE PROCEDURE sp_XoaNhaCungCap
+    @MaNCC CHAR(5)
+AS
+BEGIN
+    DELETE FROM NhaCungCap WHERE MaNCC = @MaNCC
+END
+GO
+
+CREATE PROCEDURE sp_SuaNhaCungCap
+    @MaNCC CHAR(5),
+    @TenNCC NVARCHAR(100),
+    @Email NVARCHAR(100),
+    @SoDienThoai NVARCHAR(20),
+    @DiaChi NVARCHAR(255)
+AS
+BEGIN
+    UPDATE NhaCungCap
+    SET TenNCC = @TenNCC,
+        Email = @Email,
+        SoDienThoai = @SoDienThoai,
+        DiaChi = @DiaChi
+    WHERE MaNCC = @MaNCC
+END
+GO
+
+CREATE PROCEDURE sp_LayNhaCungCap
+AS
+BEGIN
+    SELECT MaNCC, TenNCC, Email, SoDienThoai, DiaChi
+    FROM NhaCungCap
 END
 GO
 

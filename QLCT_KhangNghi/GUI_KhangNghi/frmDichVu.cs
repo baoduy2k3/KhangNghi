@@ -1,4 +1,5 @@
 ﻿using BUS_KhangNghi;
+using DevExpress.Data.NetCompatibility.Extensions;
 using DTO_KhangNghi;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace GUI_KhangNghi
     public partial class frmDichVu : Form
     {
         DichVuBUS bus = new DichVuBUS();
+        ToolTip toolTip = new ToolTip();
 
         public frmDichVu()
         {
@@ -28,6 +30,8 @@ namespace GUI_KhangNghi
             ResetForm();
             txtMaDV.Text = GenerateMaDV();
             txtMaDV.ReadOnly = true;
+            toolTip.SetToolTip(txtTimKiem, "Nhập tên hoặc mã dịch vụ để tìm kiếm");
+            toolTip.SetToolTip(btnTimKiem, "Nhấn để thực hiện tìm kiếm");
         }
 
         private void LoadDichVu()
@@ -67,6 +71,15 @@ namespace GUI_KhangNghi
         {
             if (!ValidateInputs()) return;
 
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn thêm dịch vụ mới này không?",
+                "Xác nhận thêm",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
+
+            if (result != DialogResult.Yes) return;
+
             DichVuDTO dv = new DichVuDTO
             {
                 MaDV = txtMaDV.Text,
@@ -77,30 +90,38 @@ namespace GUI_KhangNghi
 
             if (bus.ThemDichVu(dv))
             {
-                MessageBox.Show("Thêm dịch vụ thành công");
+                MessageBox.Show("Thêm dịch vụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadDichVu();
                 ResetForm();
             }
             else
             {
-                MessageBox.Show("Thêm dịch vụ thất bại");
+                MessageBox.Show("Thêm dịch vụ thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
-            if (dgvDSDV.CurrentRow != null)
+            if (dgvDSDV.CurrentRow == null)
             {
-                string maDV = dgvDSDV.CurrentRow.Cells["MaDV"].Value.ToString();
+                MessageBox.Show("Vui lòng chọn dịch vụ cần xóa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string maDV = dgvDSDV.CurrentRow.Cells["MaDV"].Value.ToString();
+            DialogResult result = MessageBox.Show($"Bạn có chắc chắn muốn xóa dịch vụ có mã: {maDV} không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
                 if (bus.XoaDichVu(maDV))
                 {
-                    MessageBox.Show("Xóa thành công");
+                    MessageBox.Show("Xóa dịch vụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadDichVu();
                     ResetForm();
                 }
                 else
                 {
-                    MessageBox.Show("Xóa thất bại");
+                    MessageBox.Show("Xóa dịch vụ thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -108,6 +129,15 @@ namespace GUI_KhangNghi
         private void btnSua_Click(object sender, EventArgs e)
         {
             if (!ValidateInputs()) return;
+
+            if (dgvDSDV.CurrentRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn dịch vụ cần sửa!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn sửa thông tin dịch vụ này không?", "Xác nhận sửa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
 
             DichVuDTO dv = new DichVuDTO
             {
@@ -119,13 +149,13 @@ namespace GUI_KhangNghi
 
             if (bus.SuaDichVu(dv))
             {
-                MessageBox.Show("Sửa dịch vụ thành công");
+                MessageBox.Show("Sửa dịch vụ thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 LoadDichVu();
                 ResetForm();
             }
             else
             {
-                MessageBox.Show("Sửa dịch vụ thất bại");
+                MessageBox.Show("Sửa dịch vụ thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -147,24 +177,69 @@ namespace GUI_KhangNghi
             txtTenDV.Clear();
             txtGiaDV.Clear();
             txtMoTa.Clear();
+            txtTimKiem.Clear();
+            LoadDichVu();
         }
 
         private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(txtTenDV.Text) ||
-                string.IsNullOrWhiteSpace(txtGiaDV.Text) ||
-                !decimal.TryParse(txtGiaDV.Text, out _) ||
-                string.IsNullOrWhiteSpace(txtMoTa.Text))
+            if (string.IsNullOrWhiteSpace(txtTenDV.Text))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ và hợp lệ thông tin.");
+                MessageBox.Show("Tên dịch vụ không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+
+            if (string.IsNullOrWhiteSpace(txtGiaDV.Text) || !decimal.TryParse(txtGiaDV.Text, out decimal gia) || gia <= 0)
+            {
+                MessageBox.Show("Giá dịch vụ phải là số và lớn hơn 0!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtMoTa.Text))
+            {
+                MessageBox.Show("Mô tả không được để trống!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             return true;
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             ResetForm();
+        }
+
+        private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnTimKiem.PerformClick(); // giả lập nhấn nút Tìm kiếm
+            }
+        }
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiem.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DataTable dt = bus.LayDanhSachDichVu();
+            var filtered = dt.AsEnumerable()
+                             .Where(row => row["MaDV"].ToString().Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                                           row["TenDV"].ToString().Contains(keyword, StringComparison.OrdinalIgnoreCase));
+
+            if (filtered.Any())
+            {
+                dgvDSDV.DataSource = filtered.CopyToDataTable();
+            }
+            else
+            {
+                dgvDSDV.DataSource = null;
+                MessageBox.Show("Không tìm thấy dữ liệu phù hợp.", "Kết quả tìm kiếm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

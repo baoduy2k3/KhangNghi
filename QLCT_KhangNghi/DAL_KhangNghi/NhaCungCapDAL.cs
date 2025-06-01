@@ -74,19 +74,34 @@ namespace DAL_KhangNghi
         public string LayMaNCCMoiNhat()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("SELECT TOP 1 MaNCC FROM NhaCungCap ORDER BY MaNCC DESC", conn))
+            using (SqlCommand cmd = new SqlCommand("SELECT MaNCC FROM NhaCungCap", conn))
             {
                 conn.Open();
-                var result = cmd.ExecuteScalar();
-                if (result != null)
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                int max = 0;
+                while (reader.Read())
                 {
-                    string maCu = result.ToString().Substring(2); // Giả sử mã dạng "NC001"
-                    int so = int.Parse(maCu) + 1;
-                    return $"NC{so:D3}";
+                    string ma = reader.GetString(0); // ví dụ "NCC01"
+                    if (ma.StartsWith("NCC"))
+                    {
+                        string soStr = ma.Substring(3); // phần số
+                        if (int.TryParse(soStr, out int so) && so <= 99)
+                        {
+                            max = Math.Max(max, so);
+                        }
+                    }
                 }
-                return "NC001";
+
+                int maMoi = max + 1;
+                if (maMoi > 99)
+                    throw new Exception("Đã vượt quá giới hạn mã NCC99 với CHAR(5).");
+
+                // Không dùng D3 vì nó thành NCC011. Dùng D2 để giữ mã 5 ký tự.
+                return $"NCC{maMoi.ToString("D2")}";
             }
-       }
-    
-}
+
+        }
+
+    }
 }

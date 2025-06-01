@@ -35,8 +35,9 @@ namespace DAL_KhangNghi
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@MaSP", sp.MaSP);
                 cmd.Parameters.AddWithValue("@TenSP", sp.TenSP);
+                cmd.Parameters.AddWithValue("@DonViTinh", sp.DonViTinh);
                 cmd.Parameters.AddWithValue("@GiaBan", sp.GiaBan);
-                cmd.Parameters.AddWithValue("@MaLoaiSP", sp.MaLoaiSP);
+                cmd.Parameters.AddWithValue("@MaLoai", sp.MaLoai);
                 cmd.Parameters.AddWithValue("@MoTa", sp.MoTa);
                 conn.Open();
                 return cmd.ExecuteNonQuery() > 0;
@@ -51,8 +52,9 @@ namespace DAL_KhangNghi
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@MaSP", sp.MaSP);
                 cmd.Parameters.AddWithValue("@TenSP", sp.TenSP);
+                cmd.Parameters.AddWithValue("@DonViTinh", sp.DonViTinh);
                 cmd.Parameters.AddWithValue("@GiaBan", sp.GiaBan);
-                cmd.Parameters.AddWithValue("@MaLoaiSP", sp.MaLoaiSP);
+                cmd.Parameters.AddWithValue("@MaLoai", sp.MaLoai);
                 cmd.Parameters.AddWithValue("@MoTa", sp.MoTa);
                 conn.Open();
                 return cmd.ExecuteNonQuery() > 0;
@@ -91,7 +93,7 @@ namespace DAL_KhangNghi
         public DataTable LayDanhSachLoaiSanPham()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
-            using (SqlCommand cmd = new SqlCommand("sp_LaySanPham", conn))
+            using (SqlCommand cmd = new SqlCommand("sp_LayDanhSachLoaiSanPham", conn))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 DataTable dt = new DataTable();

@@ -539,27 +539,27 @@
             this.ctxMenuTaiKhoan.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
             this.ctxMenuTaiKhoan.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
             this.ctxMenuTaiKhoan.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
-            this.ctxMenuTaiKhoan.Size = new System.Drawing.Size(215, 110);
+            this.ctxMenuTaiKhoan.Size = new System.Drawing.Size(178, 82);
             // 
             // xemTàiKhoảnToolStripMenuItem
             // 
             this.xemTàiKhoảnToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("xemTàiKhoảnToolStripMenuItem.Image")));
             this.xemTàiKhoảnToolStripMenuItem.Name = "xemTàiKhoảnToolStripMenuItem";
-            this.xemTàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.xemTàiKhoảnToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.xemTàiKhoảnToolStripMenuItem.Text = "Xem tài khoản";
             // 
             // đổiMậtKhẩuToolStripMenuItem
             // 
             this.đổiMậtKhẩuToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("đổiMậtKhẩuToolStripMenuItem.Image")));
             this.đổiMậtKhẩuToolStripMenuItem.Name = "đổiMậtKhẩuToolStripMenuItem";
-            this.đổiMậtKhẩuToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.đổiMậtKhẩuToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.đổiMậtKhẩuToolStripMenuItem.Text = "Đổi mật khẩu";
             // 
             // đăngXuấtToolStripMenuItem
             // 
             this.đăngXuấtToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("đăngXuấtToolStripMenuItem.Image")));
             this.đăngXuấtToolStripMenuItem.Name = "đăngXuấtToolStripMenuItem";
-            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
+            this.đăngXuấtToolStripMenuItem.Size = new System.Drawing.Size(177, 26);
             this.đăngXuấtToolStripMenuItem.Text = "Đăng xuất";
             // 
             // frmMainQuanLy
@@ -573,6 +573,7 @@
             this.Controls.Add(this.panelTieuDe);
             this.Name = "frmMainQuanLy";
             this.Text = "Khang Nghị - Quản Lý";
+            this.Load += new System.EventHandler(this.frmMainQuanLy_Load);
             this.panelTieuDe.ResumeLayout(false);
             this.panelTieuDe.PerformLayout();
             this.panel1.ResumeLayout(false);
