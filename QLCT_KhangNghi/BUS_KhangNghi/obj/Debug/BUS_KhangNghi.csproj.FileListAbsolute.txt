@@ -9,3 +9,14 @@ C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_KhangNghi.cs
 C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_Khan.08F39B2F.Up2Date
 C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_KhangNghi.dll
 C:\Users\Bao Duy\Desktop\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\bin\Debug\BUS_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\bin\Debug\BUS_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\bin\Debug\DAL_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\bin\Debug\DTO_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\bin\Debug\DAL_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\bin\Debug\DTO_KhangNghi.pdb
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_KhangNghi.csproj.AssemblyReference.cache
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_KhangNghi.csproj.CoreCompileInputs.cache
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_Khan.08F39B2F.Up2Date
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_KhangNghi.dll
+C:\Users\Bao Duy\Desktop\KhangNghi\QLCT_KhangNghi\BUS_KhangNghi\obj\Debug\BUS_KhangNghi.pdb

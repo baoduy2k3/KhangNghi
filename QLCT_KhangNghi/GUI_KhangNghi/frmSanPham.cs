@@ -1,4 +1,5 @@
 ﻿using BUS_KhangNghi;
+using DevExpress.Data.NetCompatibility.Extensions;
 using DTO_KhangNghi;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace GUI_KhangNghi
     public partial class frmSanPham : Form
     {
         SanPhamBUS bus = new SanPhamBUS();
+        ToolTip toolTip = new ToolTip();
 
         public frmSanPham()
         {
@@ -30,19 +32,21 @@ namespace GUI_KhangNghi
             LoadLoaiSanPham();
             FormatDataGridView();
             LoadDonViTinh();
+            toolTip.SetToolTip(txtTimKiem, "Nhập tên hoặc mã sản phẩm để tìm kiếm");
+            toolTip.SetToolTip(btnTimKiem, "Nhấn để thực hiện tìm kiếm");
         }
 
         private void LoadDonViTinh()
         {
             List<string> donViTinh = new List<string>()
-    {
-        "Cái",
-        "Chiếc",
-        "Kg",
-        "Lít",
-        "Hộp",
-        "Thùng"
-    };
+            {
+                "Cái",
+                "Chiếc",
+                "Kg",
+                "Lít",
+                "Hộp",
+                "Thùng"
+            };
             cbDVT.DataSource = donViTinh;
             cbDVT.SelectedIndex = -1;
         }
@@ -59,6 +63,21 @@ namespace GUI_KhangNghi
         private void LoadSanPham()
         {
             dgvDSSP.DataSource = bus.LayDanhSachSanPham();
+            // Đặt tiêu đề cột
+            if (dgvDSSP.Columns.Contains("MaSP"))
+                dgvDSSP.Columns["MaSP"].HeaderText = "Mã sản phẩm";
+            if (dgvDSSP.Columns.Contains("TenSP"))
+                dgvDSSP.Columns["TenSP"].HeaderText = "Tên sản phẩm";
+            if (dgvDSSP.Columns.Contains("DonViTinh"))
+                dgvDSSP.Columns["DonViTinh"].HeaderText = "Đơn vị tính";
+            if (dgvDSSP.Columns.Contains("MaLoai"))
+                dgvDSSP.Columns["MaLoai"].Visible = false;
+            if (dgvDSSP.Columns.Contains("GiaBan"))
+                dgvDSSP.Columns["GiaBan"].HeaderText = "Giá bán";
+            if (dgvDSSP.Columns.Contains("TenLoaiSanPham"))
+                dgvDSSP.Columns["TenLoaiSanPham"].HeaderText = "Loại sản phẩm";
+            if (dgvDSSP.Columns.Contains("MoTa"))
+                dgvDSSP.Columns["MoTa"].HeaderText = "Mô tả";          
             txtMaSP.Text = GenerateMaSP();
             txtMaSP.ReadOnly = true;
             txtMaSP.TabStop = false;
@@ -67,8 +86,8 @@ namespace GUI_KhangNghi
         private void LoadLoaiSanPham()
         {
             cbLoaiSP.DataSource = bus.LayDanhSachLoaiSanPham();
-            cbLoaiSP.DisplayMember = "TenLoaiSP";
-            cbLoaiSP.ValueMember = "TenLoaiSanPham";
+            cbLoaiSP.DisplayMember = "TenLoai";   // Hiển thị tên cho người dùng chọn
+            cbLoaiSP.ValueMember = "MaLoai";      // Giá trị thực sự dùng để lưu vào DB
             cbLoaiSP.SelectedIndex = -1;
         }
 
@@ -85,24 +104,40 @@ namespace GUI_KhangNghi
         {
             if (!ValidateInputs()) return;
 
-            SanPhamDTO sp = new SanPhamDTO
-            {
-                MaSP = txtMaSP.Text,
-                TenSP = txtTenSP.Text,
-                MaLoaiSP = cbLoaiSP.SelectedValue.ToString(),
-                GiaBan = decimal.Parse(txtGiaBan.Text),
-                MoTa = txtMoTa.Text
-            };
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn thêm sản phẩm này?",
+                "Xác nhận thêm",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
-            if (bus.ThemSanPham(sp))
+            if (result == DialogResult.No) return;
+
+            try
             {
-                MessageBox.Show("Thêm sản phẩm thành công!");
-                LoadSanPham();
-                ResetForm();
+                SanPhamDTO sp = new SanPhamDTO
+                {
+                    MaSP = txtMaSP.Text,
+                    TenSP = txtTenSP.Text,
+                    DonViTinh = cbDVT.SelectedItem.ToString(),
+                    MaLoai = cbLoaiSP.SelectedValue.ToString(),
+                    GiaBan = decimal.Parse(txtGiaBan.Text),
+                    MoTa = txtMoTa.Text
+                };
+
+                if (bus.ThemSanPham(sp))
+                {
+                    MessageBox.Show("Thêm sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadSanPham();
+                    ResetForm();
+                }
+                else
+                {
+                    MessageBox.Show("Thêm sản phẩm thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Thêm sản phẩm thất bại!");
+                MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -112,16 +147,35 @@ namespace GUI_KhangNghi
             {
                 string maSP = dgvDSSP.CurrentRow.Cells["MaSP"].Value.ToString();
 
-                if (bus.XoaSanPham(maSP))
+                DialogResult result = MessageBox.Show(
+                    $"Bạn có chắc chắn muốn xóa sản phẩm có mã \"{maSP}\"?",
+                    "Xác nhận xóa",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.No) return;
+
+                try
                 {
-                    MessageBox.Show("Xóa sản phẩm thành công!");
-                    LoadSanPham();
-                    ResetForm();
+                    if (bus.XoaSanPham(maSP))
+                    {
+                        MessageBox.Show("Xóa sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        LoadSanPham();
+                        ResetForm();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa sản phẩm thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Xóa sản phẩm thất bại!");
+                    MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn sản phẩm để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -129,24 +183,40 @@ namespace GUI_KhangNghi
         {
             if (!ValidateInputs()) return;
 
-            SanPhamDTO sp = new SanPhamDTO
-            {
-                MaSP = txtMaSP.Text,
-                TenSP = txtTenSP.Text,
-                MaLoaiSP = cbLoaiSP.SelectedValue.ToString(),
-                GiaBan = decimal.Parse(txtGiaBan.Text),
-                MoTa = txtMoTa.Text
-            };
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn sửa thông tin sản phẩm này?",
+                "Xác nhận sửa",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
 
-            if (bus.SuaSanPham(sp))
+            if (result == DialogResult.No) return;
+
+            try
             {
-                MessageBox.Show("Sửa sản phẩm thành công!");
-                LoadSanPham();
-                ResetForm();
+                SanPhamDTO sp = new SanPhamDTO
+                {
+                    MaSP = txtMaSP.Text,
+                    TenSP = txtTenSP.Text,
+                    DonViTinh = cbDVT.SelectedItem.ToString(),
+                    MaLoai = cbLoaiSP.SelectedValue.ToString(),
+                    GiaBan = decimal.Parse(txtGiaBan.Text),
+                    MoTa = txtMoTa.Text
+                };
+
+                if (bus.SuaSanPham(sp))
+                {
+                    MessageBox.Show("Sửa sản phẩm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadSanPham();
+                    ResetForm();
+                }
+                else
+                {
+                    MessageBox.Show("Sửa sản phẩm thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Sửa sản phẩm thất bại!");
+                MessageBox.Show("Lỗi hệ thống: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -157,9 +227,11 @@ namespace GUI_KhangNghi
                 DataGridViewRow row = dgvDSSP.Rows[e.RowIndex];
                 txtMaSP.Text = row.Cells["MaSP"].Value.ToString();
                 txtTenSP.Text = row.Cells["TenSP"].Value.ToString();
-                cbLoaiSP.Text = row.Cells["TenLoaiSP"].Value.ToString();
+                cbLoaiSP.Text = row.Cells["TenLoaiSanPham"].Value.ToString();
                 txtGiaBan.Text = row.Cells["GiaBan"].Value.ToString();
                 txtMoTa.Text = row.Cells["MoTa"].Value.ToString();
+                cbLoaiSP.SelectedValue = row.Cells["MaLoai"].Value.ToString();
+
             }
         }
 
@@ -175,19 +247,67 @@ namespace GUI_KhangNghi
             cbLoaiSP.SelectedIndex = -1;
             txtGiaBan.Clear();
             txtMoTa.Clear();
+            txtTimKiem.Clear();
+            LoadSanPham();
         }
 
         private bool ValidateInputs()
         {
-            if (string.IsNullOrWhiteSpace(txtTenSP.Text) ||
-                cbLoaiSP.SelectedIndex == -1 ||
-                string.IsNullOrWhiteSpace(txtGiaBan.Text) ||
-                !decimal.TryParse(txtGiaBan.Text, out _))
+            if (string.IsNullOrWhiteSpace(txtTenSP.Text))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ và đúng định dạng thông tin sản phẩm.");
+                MessageBox.Show("Vui lòng nhập tên sản phẩm.");
+                return false;
+            }
+            if (cbLoaiSP.SelectedIndex == -1)
+            {
+                MessageBox.Show("Vui lòng chọn loại sản phẩm.");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(txtGiaBan.Text))
+            {
+                MessageBox.Show("Vui lòng nhập giá bán.");
+                return false;
+            }
+            if (!decimal.TryParse(txtGiaBan.Text, out decimal gia) || gia <= 0)
+            {
+                MessageBox.Show("Giá bán phải là một số dương hợp lệ.");
                 return false;
             }
             return true;
+        }
+       
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiem.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DataTable dt = bus.LayDanhSachSanPham();
+            var filtered = dt.AsEnumerable()
+                             .Where(row => row["MaSP"].ToString().Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                                           row["TenSP"].ToString().Contains(keyword, StringComparison.OrdinalIgnoreCase));
+
+            if (filtered.Any())
+            {
+                dgvDSSP.DataSource = filtered.CopyToDataTable();
+            }
+            else
+            {
+                dgvDSSP.DataSource = null;
+                MessageBox.Show("Không tìm thấy dữ liệu phù hợp.", "Kết quả tìm kiếm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnTimKiem.PerformClick(); // giả lập nhấn nút Tìm kiếm
+            }
         }
     }
 }

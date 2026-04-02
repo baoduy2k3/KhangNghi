@@ -1,4 +1,5 @@
 ﻿using BUS_KhangNghi;
+using DevExpress.Data.NetCompatibility.Extensions;
 using DTO_KhangNghi;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace GUI_KhangNghi
     {
         KhachHangBUS bus = new KhachHangBUS();
         DiaChiAPIHelper diaChiHelper = new DiaChiAPIHelper();
+        ToolTip toolTip = new ToolTip();
+
 
         public frmKhachHang()
         {
@@ -31,6 +34,8 @@ namespace GUI_KhangNghi
             LoadLoaiKH();
             await LoadTinhThanh(); LoadTinhThanh();
             FormatDataGirdView();
+            toolTip.SetToolTip(txtTimKiem, "Nhập họ tên hoặc mã khách hàng để tìm kiếm");
+            toolTip.SetToolTip(btnTimKiem, "Nhấn để thực hiện tìm kiếm");
         }
 
         private void FormatDataGirdView()
@@ -43,7 +48,14 @@ namespace GUI_KhangNghi
 
         private void LoadKhachHang()
         {
-            dgvDSKH.DataSource = bus.LayDanhSachKhachHang();           
+            dgvDSKH.DataSource = bus.LayDanhSachKhachHang();
+            // Đặt tiêu đề cột dễ hiểu
+            dgvDSKH.Columns["MaKH"].HeaderText = "Mã khách hàng";
+            dgvDSKH.Columns["TenKH"].HeaderText = "Họ tên";
+            dgvDSKH.Columns["TenLoaiKH"].HeaderText = "Loại khách hàng";
+            dgvDSKH.Columns["Email"].HeaderText = "Email";
+            dgvDSKH.Columns["SoDienThoai"].HeaderText = "Số điện thoại";
+            dgvDSKH.Columns["DiaChi"].HeaderText = "Địa chỉ";
             LoadTinhThanh();
             txtMaKH.Text = GenerateMaKH();
             txtMaKH.ReadOnly = true;
@@ -90,6 +102,14 @@ namespace GUI_KhangNghi
         private void btnThem_Click(object sender, EventArgs e)
         {
             if (!ValidateInputs()) return;
+           
+            DialogResult result = MessageBox.Show(
+                "Bạn có chắc chắn muốn thêm khách hàng này?",
+                "Xác nhận thêm",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.No) return;
 
             try
             {
@@ -105,18 +125,18 @@ namespace GUI_KhangNghi
 
                 if (bus.ThemKhachHang(kh))
                 {
-                    MessageBox.Show("Thêm khách hàng thành công!");
+                    MessageBox.Show("Thêm khách hàng thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadKhachHang();
                     ResetForm();
                 }
                 else
                 {
-                    MessageBox.Show("Thêm khách hàng thất bại!");
+                    MessageBox.Show("Thêm khách hàng thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi: " + ex.Message);
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi hệ thống", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -125,15 +145,23 @@ namespace GUI_KhangNghi
             if (dgvDSKH.CurrentRow != null)
             {
                 string maKH = dgvDSKH.CurrentRow.Cells["MaKH"].Value.ToString();
-                if (bus.XoaKhachHang(maKH))
+
+                var confirm = MessageBox.Show("Bạn có chắc muốn xóa khách hàng này không?",
+                                              "Xác nhận xóa",
+                                              MessageBoxButtons.YesNo,
+                                              MessageBoxIcon.Question);
+                if (confirm == DialogResult.Yes)
                 {
-                    MessageBox.Show("Xóa khách hàng thành công!");
-                    LoadKhachHang();
-                    ResetForm();
-                }
-                else
-                {
-                    MessageBox.Show("Xóa khách hàng thất bại!");
+                    if (bus.XoaKhachHang(maKH))
+                    {
+                        MessageBox.Show("Xóa khách hàng thành công!");
+                        LoadKhachHang();
+                        ResetForm();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa khách hàng thất bại!");
+                    }
                 }
             }
         }
@@ -141,6 +169,12 @@ namespace GUI_KhangNghi
         private void btnSua_Click(object sender, EventArgs e)
         {
             if (!ValidateInputs()) return;
+
+            var confirm = MessageBox.Show("Bạn có chắc muốn sửa thông tin khách hàng này không?",
+                                          "Xác nhận sửa",
+                                          MessageBoxButtons.YesNo,
+                                          MessageBoxIcon.Question);
+            if (confirm != DialogResult.Yes) return;
 
             try
             {
@@ -171,7 +205,7 @@ namespace GUI_KhangNghi
             }
         }
 
-        private void dgvDSKH_CellClick(object sender, DataGridViewCellEventArgs e)
+        private async void dgvDSKH_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
@@ -181,15 +215,76 @@ namespace GUI_KhangNghi
                 txtEmail.Text = row.Cells["Email"].Value.ToString();
                 txtSDT.Text = row.Cells["SoDienThoai"].Value.ToString();
 
-                string[] diaChi = row.Cells["DiaChi"].Value.ToString().Split(',');
-                if (diaChi.Length >= 4)
+                string diaChiFull = row.Cells["DiaChi"].Value.ToString();
+                string[] diaChiParts = diaChiFull.Split(new[] { ", " }, StringSplitOptions.None);
+
+                if (diaChiParts.Length == 4)
                 {
-                    txtSNTD.Text = diaChi[0].Trim();
-                    cbXP.Text = diaChi[1].Trim();
-                    cbQH.Text = diaChi[2].Trim();
-                    cbTT.Text = diaChi[3].Trim();
+                    txtSNTD.Text = diaChiParts[0].Trim();
+                    string tenXP = diaChiParts[1].Trim();
+                    string tenQH = diaChiParts[2].Trim();
+                    string tenTT = diaChiParts[3].Trim();
+
+                    // Load Tỉnh/Thành
+                    var tinhList = await diaChiHelper.GetTinhThanh();
+                    cbTT.DataSource = tinhList;
+                    cbTT.DisplayMember = "name";
+                    cbTT.ValueMember = "code";
+
+                    var selectedTinh = tinhList.FirstOrDefault(t => t.name == tenTT);
+                    if (selectedTinh != null)
+                    {
+                        cbTT.SelectedValue = selectedTinh.code;
+
+                        // Load Quận/Huyện
+                        var huyenList = await diaChiHelper.GetQuanHuyen(selectedTinh.code);
+                        cbQH.DataSource = huyenList;
+                        cbQH.DisplayMember = "name";
+                        cbQH.ValueMember = "code";
+
+                        var selectedHuyen = huyenList.FirstOrDefault(h => h.name == tenQH);
+                        if (selectedHuyen != null)
+                        {
+                            cbQH.SelectedValue = selectedHuyen.code;
+
+                            // Load Xã/Phường
+                            var phuongList = await diaChiHelper.GetXaPhuong(selectedHuyen.code);
+                            cbXP.DataSource = phuongList;
+                            cbXP.DisplayMember = "name";
+                            cbXP.ValueMember = "code";
+
+                            var selectedPhuong = phuongList.FirstOrDefault(p => p.name == tenXP);
+                            if (selectedPhuong != null)
+                            {
+                                cbXP.SelectedValue = selectedPhuong.code;
+                            }
+                            else
+                            {
+                                cbXP.SelectedIndex = -1;
+                            }
+                        }
+                        else
+                        {
+                            cbQH.SelectedIndex = -1;
+                            cbXP.DataSource = null;
+                        }
+                    }
+                    else
+                    {
+                        cbTT.SelectedIndex = -1;
+                        cbQH.DataSource = null;
+                        cbXP.DataSource = null;
+                    }
+                }
+                else
+                {
+                    txtSNTD.Clear();
+                    cbTT.SelectedIndex = -1;
+                    cbQH.DataSource = null;
+                    cbXP.DataSource = null;
                 }
 
+                // Loại khách hàng
                 cbLoaiKH.Text = row.Cells["TenLoaiKH"].Value.ToString();
             }
         }
@@ -214,28 +309,78 @@ namespace GUI_KhangNghi
             cbTT.SelectedIndex = -1;
             cbQH.DataSource = null;
             cbXP.DataSource = null;
+            txtTimKiem.Clear();
+            LoadKhachHang();
         }
 
         private bool ValidateInputs()
         {
             if (string.IsNullOrWhiteSpace(txtHoTen.Text) ||
-                string.IsNullOrWhiteSpace(txtEmail.Text) ||
-                string.IsNullOrWhiteSpace(txtSDT.Text) ||
-                string.IsNullOrWhiteSpace(txtSNTD.Text) ||
-                cbLoaiKH.SelectedIndex == -1 ||
-                cbTT.SelectedIndex == -1 ||
-                cbQH.SelectedIndex == -1 ||
-                cbXP.SelectedIndex == -1)
+        string.IsNullOrWhiteSpace(txtEmail.Text) ||
+        string.IsNullOrWhiteSpace(txtSDT.Text) ||
+        string.IsNullOrWhiteSpace(txtSNTD.Text) ||
+        cbLoaiKH.SelectedIndex == -1 ||
+        cbTT.SelectedIndex == -1 ||
+        cbQH.SelectedIndex == -1 ||
+        cbXP.SelectedIndex == -1)
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin.");
                 return false;
             }
+
+            // Kiểm tra định dạng email
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtEmail.Text, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                MessageBox.Show("Email phải có dạng [Tên email] + [@] + [Tên miền].");
+                return false;
+            }
+
+            // Kiểm tra số điện thoại (bắt đầu bằng 0, 10-12 chữ số)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtSDT.Text, @"^0\d{9,11}$"))
+            {
+                MessageBox.Show("Số điện thoại phải bắt đầu bằng 0 và có độ dài từ 10 đến 12 chữ số.");
+                return false;
+            }
+
             return true;
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
             ResetForm();
+        }
+
+        private void txtTimKiem_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnTimKiem.PerformClick(); // giả lập nhấn nút Tìm kiếm
+            }
+        }
+
+        private void btnTimKiem_Click(object sender, EventArgs e)
+        {
+            string keyword = txtTimKiem.Text.Trim();
+            if (string.IsNullOrEmpty(keyword))
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            DataTable dt = bus.LayDanhSachKhachHang();
+            var filtered = dt.AsEnumerable()
+                             .Where(row => row["MaKH"].ToString().Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                                           row["TenKH"].ToString().Contains(keyword, StringComparison.OrdinalIgnoreCase));
+
+            if (filtered.Any())
+            {
+                dgvDSKH.DataSource = filtered.CopyToDataTable();
+            }
+            else
+            {
+                dgvDSKH.DataSource = null;
+                MessageBox.Show("Không tìm thấy dữ liệu phù hợp.", "Kết quả tìm kiếm", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

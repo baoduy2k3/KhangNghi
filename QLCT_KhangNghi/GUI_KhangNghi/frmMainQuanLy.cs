@@ -21,7 +21,7 @@ namespace GUI_KhangNghi
             lblTieuDe.Text = "CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ KHANG NGHỊ";
             hideSubMenu();
         }
-
+       
         public void custom()
         {
             panelSubMenu.Visible = false;
@@ -49,7 +49,8 @@ namespace GUI_KhangNghi
         }
 
         private Form currentFormChild;
-        private void OpenChildForm(Form childForm)
+
+        public void OpenChildForm(Form childForm)
         {
             if (currentFormChild != null)
             {
@@ -67,7 +68,7 @@ namespace GUI_KhangNghi
 
         private void btnTrangChu_Click(object sender, EventArgs e)
         {
-            OpenChildForm(new frmTrangChu());
+            OpenChildForm(new frmTrangChu(this));
             lblTieuDe.Text = "CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ KHANG NGHỊ";
             hideSubMenu();
         }
@@ -119,7 +120,9 @@ namespace GUI_KhangNghi
 
         private void btnThongKe_Click(object sender, EventArgs e)
         {
-
+            OpenChildForm(new frmThongKe());
+            lblTieuDe.Text = btnThongKe.Text;
+            hideSubMenu();
         }
 
         private void btnLLV_Click(object sender, EventArgs e)
@@ -140,6 +143,24 @@ namespace GUI_KhangNghi
         private void btnDMK_Click(object sender, EventArgs e)
         {
 
-        }      
+        }
+
+        private void btnNCC_Click(object sender, EventArgs e)
+        {
+            OpenChildForm(new frmNhaCungCap());
+            lblTieuDe.Text = btnNCC.Text;
+            hideSubMenu();
+        }
+
+        private void btnTaiKhoan_Click(object sender, EventArgs e)
+        {
+            ctxMenuTaiKhoan.Show(btnTaiKhoan, new Point(0, btnTaiKhoan.Height));
+        }
+
+        private void frmMainQuanLy_Load(object sender, EventArgs e)
+        {
+            frmTrangChu frm = new frmTrangChu(this); // Truyền this
+            OpenChildForm(frm);
+        }
     }
 }

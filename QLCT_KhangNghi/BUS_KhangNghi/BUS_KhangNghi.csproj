@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseUtilityBUS.cs" />
+    <Compile Include="DichVuBUS.cs" />
     <Compile Include="KhachHangBUS.cs" />
+    <Compile Include="NhaCungCapBUS.cs" />
     <Compile Include="NhanVienBUS.cs" />
     <Compile Include="NhapHangBUS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
